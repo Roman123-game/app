@@ -5,6 +5,7 @@ import Charts from './pages/Charts';
 
 function App() {
   return (
+
     
   <BrowserRouter>
   <Routes>
@@ -12,6 +13,7 @@ function App() {
 <Route element={<Charts/>} path="/charts"/>
   </Routes>
   </BrowserRouter>
+  
   );
 }
 
