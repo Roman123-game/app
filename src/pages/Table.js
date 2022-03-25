@@ -1,6 +1,6 @@
 import axios from 'axios';
 import "./Table.css";
-import { useEffect,useState } from 'react';
+import { useEffect,useState,useContext } from 'react';
 import SideBar from '../componenets/SideBar';
 import * as React from 'react';
 import Table from '@mui/material/Table';
@@ -13,11 +13,13 @@ import TablePagination from '@mui/material/TablePagination';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import { v4 as uuidv4 } from 'uuid';
+import MainContext from "../Context/MainContext";
 
 export default function DataTable() {
+  const {setShowBitcoin,setShowEtherium,setShowTheter,
+  } = useContext(MainContext);
 
   const [columns1, setColumns1] = useState("");
-
   async function fetchPost() {
     console.clear();
     const responce = await axios.get(
@@ -34,6 +36,19 @@ export default function DataTable() {
     console.log("fetch post")
   }, [])
 
+  function Showfunc(event){
+    if (event === 'Bitcoin'){
+      setShowBitcoin(true)
+    }
+    else if (event === 'Etherium'){
+      setShowEtherium(true)
+    }
+    else if (event === 'Tether'){
+      setShowTheter(true)
+    }
+
+  }
+
 
   return (
     <div  style={{ height: 400, width: '80%',marginLeft: 220 }}>
@@ -49,7 +64,6 @@ export default function DataTable() {
                 <TableCell >Price (btc)</TableCell>
                 <TableCell >Market Cap</TableCell>
                 <TableCell >Volume24H</TableCell>
-                <TableCell >Graph</TableCell>
                 <TableCell >Buttons</TableCell>
               </TableRow>
             </TableHead>
@@ -63,6 +77,7 @@ export default function DataTable() {
                   <TableCell component="th" scope="row"> {item.priceBtc}</TableCell>
                   <TableCell component="th" scope="row"> {item.marketCap}</TableCell>
                   <TableCell component="th" scope="row"> {item.volume}</TableCell>
+                  <TableCell component="th" scope="row"> <button onClick={()=>Showfunc(item.name)}>&#x1F5E0;</button></TableCell>
                 </TableRow>
               ))}
             </TableBody>
